@@ -1,6 +1,9 @@
+# Remember to change the name of the file
+# 'curvature_3.tex' to match 'metric_3.py'
+
 #!/usr/bin/env python3
 
-from metric import *
+from metric_4 import *
 
 n = len( x )
 
@@ -65,7 +68,7 @@ def E( i, j ):
 import sys
 
 orig_stdout = sys.stdout
-f = open('curvature.tex', 'w')
+f = open('curvature_4.tex', 'w')
 sys.stdout = f
 
 for i in range( n ):
