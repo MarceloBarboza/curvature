@@ -2,12 +2,17 @@
 
 from sympy import *
 
-x = [ var( 'x_%d' %i ) for i in range( 4 ) ]
+x = [ Symbol( 'x_%d' %i ) for i in range( 4 ) ]
+e = [ Symbol( 'e_%d' %i ) for i in range( 4 ) ]
+
+for i in range( 4 ):
+    if i == 0:
+        e[ i ] = - 1
+    else:
+        e[ i ] = + 1
 
 A = Function( 'A' )( x[ 0 ] )
 B = Function( 'B' )( x[ 1 ], x[ 2 ], x[ 3 ] )
-
-zeta = exp( A + B )
 
 def delta( i, j ):
     if i in range( 4 ) and j in range( 4 ):
@@ -17,9 +22,9 @@ def delta( i, j ):
             return 0
 
 GG = [
-      [   -1 * delta( i, 0 ) for i in range( 4 ) ]
-    , [ zeta * delta( i, 1 ) for i in range( 4 ) ]
-    , [ zeta * delta( i, 2 ) for i in range( 4 ) ]
-    , [ zeta * delta( i, 3 ) for i in range( 4 ) ]
+      [ e[ 0 ] * exp( 0 + 0 ) * delta( 0, j ) for j in range( 4 ) ]
+    , [ e[ 1 ] * exp( A + B ) * delta( 1, j ) for j in range( 4 ) ]
+    , [ e[ 2 ] * exp( A + B ) * delta( 2, j ) for j in range( 4 ) ]
+    , [ e[ 3 ] * exp( A + B ) * delta( 3, j ) for j in range( 4 ) ]
 ]
 
