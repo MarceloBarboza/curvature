@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from metric_1 import *
+from metric_2 import *
 
 n = len( x )
 
@@ -65,12 +65,18 @@ def E( i, j ):
 import sys
 
 orig_stdout = sys.stdout
-f = open('curvature_1.tex', 'w')
+f = open('curvature_2.tex', 'w')
 sys.stdout = f
 
 for i in range( n ):
     for j in range( i, n ):
-        print( "\GG{\partial_"'%d' %i,"}{\partial_"'%d' %j,"} & =", latex( E( i, j ) ), "\\\\" )
+        print(
+            "\GG{\partial_"'%d' %i
+            ,"}{\partial_"'%d' %j
+            ,"} & ="
+            , latex( E( i, j ) )
+            , "\\\\"
+        )
 
 sys.stdout = orig_stdout
 f.close()

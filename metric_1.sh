@@ -58,3 +58,23 @@ GG = [
 " >> "$WD"/metric_1.py
     fi
 done
+
+for i in $(seq "$n"); do
+    if [ "$i" = "1" ]; then
+        echo -n "mu  = Function( 'mu' )( x[ "$((i-1))" ]" >> "$WD"/metric_1.py
+    elif [ "$i" -lt "$n" ]; then
+        echo -n ", x[ $((i-1)) ]" >> "$WD"/metric_1.py
+    else
+        echo ", x[ "$((i-1))" ] )" >> "$WD"/metric_1.py
+    fi
+done
+
+for i in $(seq "$n"); do
+    if [ "$i" = "1" ]; then
+        echo -n "rho = Function( 'mu' )( x[ "$((i-1))" ]" >> "$WD"/metric_1.py
+    elif [ "$i" -lt "$n" ]; then
+        echo -n ", x[ $((i-1)) ]" >> "$WD"/metric_1.py
+    else
+        echo ", x[ "$((i-1))" ] )" >> "$WD"/metric_1.py
+    fi
+done

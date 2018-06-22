@@ -2,8 +2,8 @@
 
 from sympy import *
 
-x = [ Symbol( 'x_%d' %i ) for i in range( 4 ) ]
-e = [ Symbol( 'e_%d' %i ) for i in range( 4 ) ]
+x = [ var( 'x_%d' %i ) for i in range( 4 ) ]
+e = [ var( 'e_%d' %i ) for i in range( 4 ) ]
 
 for i in range( 4 ):
     if i == 0:
@@ -28,3 +28,12 @@ GG = [
     , [ e[ 3 ] * exp( A + B ) * delta( 3, j ) for j in range( 4 ) ]
 ]
 
+mu  = Function( 'mu' )( x[ 0 ], x[ 1 ], x[ 2 ], x[ 3 ] )
+rho = Function( 'mu' )( x[ 0 ], x[ 1 ], x[ 2 ], x[ 3 ] )
+
+def delta( i, j ):
+    if i in range( 4 ) and j in range( 4 ):
+        if i == j:
+            return 1
+        else:
+            return 0
