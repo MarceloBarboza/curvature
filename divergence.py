@@ -37,7 +37,7 @@ sys.stdout = f
 for i in range( n ):
     print(
         "\\frac{(\mbox{div}_g\mathbb{T})(E_"'%d' %i,")}{\eta_"'%d' %i
-        ,"} \& ="
+        ,"} & ="
         , latex( semi_divT( i ) )
         , "\\\\"
     )
