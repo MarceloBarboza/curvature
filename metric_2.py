@@ -12,9 +12,9 @@ for i in range( 4 ):
         e[ i ] = + 1
 
 zeta_0 = 1
-zeta_1 = Function( 'zeta_1' )( x[ 0 ], x[ 1 ] )
-zeta_2 = Function( 'zeta_2' )( x[ 0 ], x[ 2 ] )
-zeta_3 = Function( 'zeta_3' )( x[ 0 ], x[ 3 ] )
+zeta_1 = Function( 'zeta_1' )( x[ 1 ] )
+zeta_2 = Function( 'zeta_2' )( x[ 2 ] )
+zeta_3 = Function( 'zeta_3' )( x[ 3 ] )
 
 def delta( i, j ):
     if i in range( 4 ) and j in range( 4 ):
@@ -23,11 +23,14 @@ def delta( i, j ):
         else:
             return 0
 
+phi = Function( 'phi' )( x[ 0 ] )
+
 GG = [
-      [ e[ 0 ] * zeta_0 * delta( 0, j ) for j in range( 4 ) ] 
-    , [ e[ 1 ] * zeta_1 * delta( 1, j ) for j in range( 4 ) ]
-    , [ e[ 2 ] * zeta_2 * delta( 2, j ) for j in range( 4 ) ]
-    , [ e[ 3 ] * zeta_3 * delta( 3, j ) for j in range( 4 ) ]
+
+      [ e[ 0 ] * phi ** -2 * zeta_0 * delta( 0, j ) for j in range( 4 ) ]
+    , [ e[ 1 ] * phi ** -2 * zeta_1 * delta( 1, j ) for j in range( 4 ) ]
+    , [ e[ 2 ] * phi ** -2 * zeta_2 * delta( 2, j ) for j in range( 4 ) ]
+    , [ e[ 3 ] * phi ** -2 * zeta_3 * delta( 3, j ) for j in range( 4 ) ]
 ]
 
 mu  = Function( 'mu' )( x[ 0 ], x[ 1 ], x[ 2 ], x[ 3 ] )
