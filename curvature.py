@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from metric_1 import *
+from metric import *
 
 n = len( x )
 
