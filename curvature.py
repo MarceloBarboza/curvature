@@ -312,7 +312,8 @@ def print_conformal_metric(dimension):
 def main():
     if len(sys.argv) == 2:
         dimension = int(sys.argv[1])
-        print_conformal_metric(dimension)
+        if dimension >= 2:
+            print_conformal_metric(dimension)
     else:
         print("Tente isto: ./curvature.py num_int.")
 
