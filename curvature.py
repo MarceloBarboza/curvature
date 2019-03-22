@@ -229,25 +229,84 @@ def print_conformal_metric(dimension):
             print(", x_%d, m, l)" %i)
     print("\treturn sympy.simplify(rm2)")
     print("")
+    print("# Sectional")
+    for i in range(dimension):
+        if i == 0:
+            print("def K(x_0", end='')
+        elif i < dimension - 1:
+            print(", x_%d" %i, end='')
+        else:
+            print(", x_%d, i, j):" %i)
+    print("\tif i != j:")
+    print("\t\tk = Rm2(x_0", end='')
+    for i in range(1, dimension):
+        if i < dimension - 1:
+            print(", x_%d" %i, end='')
+        else:
+            print(", x_%d, i, j, i, j) * (\n\t\t\t\tg(x_0" %i, end='')
+    for i in range(1, dimension):
+        if i < dimension - 1:
+            print(", x_%d" %i, end='')
+        else:
+            print(", x_%d, i, i) * g(x_0" %i, end='')
+    for i in range(1, dimension):
+        if i < dimension - 1:
+            print(", x_%d" %i, end='')
+        else:
+            print(", x_%d, j, j) - g(x_0" %i, end='')
+    for i in range(1, dimension):
+        if i < dimension - 1:
+            print(", x_%d" %i, end='')
+        else:
+            print(", x_%d, i, j) ** 2\n\t\t\t) ** -1" %i)
+    print("\t\treturn sympy.simplify(k)")
+    print("")
+    print("# Ricci")
+    for i in range(dimension):
+        if i == 0:
+            print("def Rc(x_0", end='')
+        elif i < dimension - 1:
+            print(", x_%d" %i, end='')
+        else:
+            print(", x_%d, i, j):" %i)
+    print("\trc = 0")
+    print("\tfor k in range(%d):" %dimension)
+    for i in range(dimension):
+        if i == 0:
+            print("\t\trc += Rm(x_0", end='')
+        elif i < dimension - 1:
+            print(", x_%d" %i, end='')
+        else:
+            print(", x_%d, i, k, j, k)" %i)
+    print("\treturn sympy.simplify(rc)")
+    print("")
+    print("# Scalar")
+    for i in range(dimension):
+        if i == 0:
+            print("def scal(x_0", end='')
+        elif i < dimension - 1:
+            print(", x_%d" %i, end='')
+        else:
+            print(", x_%d):" %i)
+    print("\tscal = 0")
+    print("\tfor i in range(%d):" %dimension)
+    print("\t\tfor j in range(%d):" %dimension)
+    for i in range(dimension):
+        if i == 0:
+            print("\t\t\tscal += h(x_0", end='')
+        elif i < dimension - 1:
+            print(", x_%d" %i, end='')
+        else:
+            print(", x_%d, i, j) * Rc(x_0" %i, end='')
+    for i in range(1, dimension):
+        if i < dimension - 1:
+            print(", x_%d" %i, end='')
+        else:
+            print(", x_%d, i, j)" %i)
+    print("\treturn sympy.simplify(scal)")
+    print("")
     sys.stdout = orig_stdout
     metric.close()
-
-# Sectional Curvature
-def K(i, j):
-    if i in range(dimension) and j in range(dimension):
-        if i != j:
-            return simpy.simplify(
-                Rm2(i, j, i, j) * (
-                    metric.g[i, i] * metric.g[j, j] - metric.g[i, j]**2
-                )**-1
-            )
-
-# Ricci
-def Rc(i, j):
-    rc = 0
-    for k in range(dimension):
-        rc += Rm1(i, k, j, k)
-    return sympy.simplify(rc)
 
 #
 def main():
