@@ -1,82 +1,63 @@
 #!/usr/bin/env python3
 
-from metric import *
-
-n = len( x )
-
-G = Matrix( GG )
-H = G ** -1
-
-def Gamma( i, j, k ):
-    gamma = 0
-    for l in range( n ):
-        gamma += 1/2 * (
-                + diff( G[ j, l ], x[ i ] )
-                + diff( G[ l, i ], x[ j ] )
-                - diff( G[ i, j ], x[ l ] )
-        ) * H[ l, k ]
-    return simplify( gamma )
-
-# Rm_{i, j, k}^l:
-def Rm1( i, j, k, l ):
-    rm1 = (
-        + diff( Gamma( i, k, l ), x[ j ] )
-        - diff( Gamma( j, k, l ), x[ i ] )
-    )
-    for m in range( n ):
-        rm1 += (
-                + Gamma( i, k, m ) * Gamma( m, j, l )
-                - Gamma( j, k, m ) * Gamma( m, i, l )
-        )
-    return simplify( rm1 )
-
-# Rm_{i, j, k, l}:
-def Rm2( i, j, k, l ):
-    rm2 = 0
-    for m in range( n ):
-        rm2 += Rm1( i, j, k, l ) * G[ m, l ]
-    return simplify( rm2 )
-
-def K( i, j ):
-    if i in range( n ) and j in range( n ):
-        if i != j:
-            return simplify(
-                Rm2( i, j, i, j ) * (
-                    + G[ i, i ] * G[ j, j ]
-                    - G[ i, j ] * G[ i, j ]
-                ) ** -1
-            )
-
-def Rc( i, j ):
-    rc = 0
-    for k in range( n ):
-        rc += Rm1( i, k, j, k )
-    return simplify( rc )
-
-r = 0
-for i in range( n ):
-    for j in range( n ):
-        r += H[ i, j ] * Rc( i, j )
-R = simplify( r )
-
-def E( i, j ):
-    return simplify( Rc( i, j ) - R/2 * G[ i, j ] )
-
 import sys
+import sympy
 
-orig_stdout = sys.stdout
-f = open('curvature_2.tex', 'w')
-sys.stdout = f
+def print_conformal_metric(dimension):
+    orig_stdout = sys.stdout
+    metric = open( 'metric.py', 'w' )
+    sys.stdout = metric
+    print("")
+    print("#!/usr/bin/env python3")
+    print("")
+    print("import sympy")
+    print("")
+    for i in range(dimension):
+        if i == 0:
+            print("x = (sympy.Symbol('x_%d')" %i, end='')
+        elif i < dimension - 1:
+            print(", sympy.Symbol('x_%d')" %i, end='')
+        else:
+            print(", sympy.Symbol('x_%d'))" %i)
+    print("")
+    for i in range(dimension):
+        if i == 0:
+            print("sigma = sympy.Function('sigma')(x[0]", end='')
+        elif i < dimension - 1:
+            print(", x[%d]" %i, end='')
+        else:
+            print(", x[%d])" %i)
+    print("")
+    print("r = 0")
+    print("for i in range(%d):" %dimension)
+    print("\tr += x[i]**2")
+    print("")
+    print("def delta(i, j):")
+    print("\tif i in range(%d) and j in range(%d):" %(dimension, dimension))
+    print("\t\tif i == j:")
+    print("\t\t\treturn 1")
+    print("\t\telse:")
+    print("\t\t\treturn 0")
+    print("")
+    print("G = [")
+    print("\t[")
+    print("\t\t((1+r)*sigma/2)**-2*delta(i, j) for j in range(%d)" %dimension)
+    print("\t] for i in range(%d)" %dimension)
+    print("]")
+    print("")
+    sys.stdout = orig_stdout
+    metric.close()
 
-for i in range( n ):
-    for j in range( i, n ):
-        print(
-            "\GG{\partial_"'%d' %i
-            ,"}{\partial_"'%d' %j
-            ,"} & ="
-            , latex( E( i, j ) )
-            , "\\\\"
-        )
+import metric
 
-sys.stdout = orig_stdout
-f.close()
+g = sympy.Matrix(metric.G)
+
+def main():
+    if len(sys.argv) == 2:
+        dimension = int(sys.argv[1])
+        print_conformal_metric(dimension)
+    else:
+        print('You must inform a manifold dimension first.')
+
+if __name__ == '__main__':
+    main()
