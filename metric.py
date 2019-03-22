@@ -41,9 +41,10 @@ def Gamma(x_0, x_1, i, j, k):
 	gamma = 0
 	for l in range(2):
 		gamma += 1/2 * (
-			+ sympy.diff(g(x_0, x_1)[j, l], x_i):
-			+ sympy.diff(g(x_0, x_1)[l, i], x_j):
+			+ sympy.diff(g(x_0, x_1)[j, l], x_i)
+			+ sympy.diff(g(x_0, x_1)[l, i], x_j)
 			+ sympy.diff(g(x_0, x_1)[i, j], x_l) * h(x_0, x_1)[l, k]
+	)
 	return sympy.simplify(gamma)
 
 # Rm_{i, j, k}^l
@@ -53,10 +54,10 @@ def Rm1(x_0, x_1, i, j, k, l):
 		- sympy.diff(Gamma(x_0, x_1, j, k, l), x_i)
 	)
 	for m in range(2):
-	rm1 += (
-		+ Gamma(x_0, x_1, i, k, m) * Gamma(x_0, x_1, m, j, l)
+		rm1 += (
+			+ Gamma(x_0, x_1, i, k, m) * Gamma(x_0, x_1, m, j, l)
 		- Gamma(x_0, x_1, j, k, m) * Gamma(x_0, x_1, m, i, l)
-	)
+		)
 	return sympy.simplify(rm1)
 
 # Rm_{i, j, k, l}
@@ -88,3 +89,4 @@ def scal(x_0, x_1):
 		for j in range(2):
 			scal += h(x_0, x_1, i, j) * Rc(x_0, x_1, i, j)
 	return sympy.simplify(scal)
+

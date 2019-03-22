@@ -133,14 +133,14 @@ def print_conformal_metric(dimension):
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d)[j, l], x_i):" %i)
+            print(", x_%d)[j, l], x_i)" %i)
     for i in range(dimension):
         if i == 0:
             print("\t\t\t+ sympy.diff(g(x_0", end='')
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d)[l, i], x_j):" %i)
+            print(", x_%d)[l, i], x_j)" %i)
     for i in range(dimension):
         if i == 0:
             print("\t\t\t+ sympy.diff(g(x_0", end='')
@@ -152,7 +152,7 @@ def print_conformal_metric(dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d)[l, k]" %i)
+            print(", x_%d)[l, k]\n\t)" %i)
     print("\treturn sympy.simplify(gamma)")
     print("")
     print("# Rm_{i, j, k}^l")
@@ -178,10 +178,10 @@ def print_conformal_metric(dimension):
         else:
             print(", x_%d, j, k, l), x_i)\n\t)" %i)
     print("\tfor m in range(%d):" %dimension)
-    print("\trm1 += (")
+    print("\t\trm1 += (")
     for i in range(dimension):
         if i == 0:
-            print("\t\t+ Gamma(x_0", end='')
+            print("\t\t\t+ Gamma(x_0", end='')
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
@@ -202,7 +202,7 @@ def print_conformal_metric(dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d, m, i, l)\n\t)" %i)
+            print(", x_%d, m, i, l)\n\t\t)" %i)
     print("\treturn sympy.simplify(rm1)")
     print("")
     print("# Rm_{i, j, k, l}")
