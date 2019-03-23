@@ -151,16 +151,16 @@ def print_conformal_metric(dimension):
             print(", x_%d)[l, i], x[j])" %i)
     for i in range(dimension):
         if i == 0:
-            print("\t\t\t+ sympy.diff(g(x_0", end='')
+            print("\t\t\t- sympy.diff(g(x_0", end='')
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d)[i, j], x[l]) * h(x_0" %i, end='')
+            print(", x_%d)[i, j], x[l])\n\t) * h(x_0" %i, end='')
     for i in range(1, dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d)[l, k]\n\t)" %i)
+            print(", x_%d)[l, k]" %i)
     print("\treturn sympy.simplify(gamma)")
     print("")
     print("# Rm_{i, j, k}^l")
@@ -201,7 +201,7 @@ def print_conformal_metric(dimension):
             print(", x_%d, m, j, l)" %i)
     for i in range(dimension):
         if i == 0:
-            print("\t\t- Gamma(x_0", end='')
+            print("\t\t\t- Gamma(x_0", end='')
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
@@ -234,7 +234,7 @@ def print_conformal_metric(dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d, m, l)" %i)
+            print(", x_%d)[m, l]" %i)
     print("\treturn sympy.simplify(rm2)")
     print("")
     print("# Sectional")
@@ -256,17 +256,17 @@ def print_conformal_metric(dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d, i, i) * g(x_0" %i, end='')
+            print(", x_%d)[i, i] * g(x_0" %i, end='')
     for i in range(1, dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d, j, j) - g(x_0" %i, end='')
+            print(", x_%d)[j, j] - g(x_0" %i, end='')
     for i in range(1, dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d, i, j) ** 2\n\t\t\t) ** -1" %i)
+            print(", x_%d)[i, j] ** 2\n\t\t\t) ** -1" %i)
     print("\t\treturn sympy.simplify(k)")
     print("")
     print("# Ricci")

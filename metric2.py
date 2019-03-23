@@ -24,7 +24,7 @@ def delta(i, j):
 			return 0
 
 def G(x_0, x_1, i, j):
-	return (1 + r(x_0, x_1) * sigma(x_0, x_1) / 2) ** 2 * delta(i, j)
+	return x_1 ** -2 * delta(i, j)
 
 def g(x_0, x_1):
 	return sympy.Matrix(
