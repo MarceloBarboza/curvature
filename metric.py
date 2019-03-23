@@ -5,6 +5,8 @@ import sympy
 x_0 = sympy.Symbol('x_0')
 x_1 = sympy.Symbol('x_1')
 
+x = (x_0, x_1)
+
 def r(x_0, x_1):
 	return x_0 ** 2 + x_1 ** 2
 
@@ -41,17 +43,17 @@ def Gamma(x_0, x_1, i, j, k):
 	gamma = 0
 	for l in range(2):
 		gamma += 1/2 * (
-			+ sympy.diff(g(x_0, x_1)[j, l], x_i)
-			+ sympy.diff(g(x_0, x_1)[l, i], x_j)
-			+ sympy.diff(g(x_0, x_1)[i, j], x_l) * h(x_0, x_1)[l, k]
+			+ sympy.diff(g(x_0, x_1)[j, l], x[i])
+			+ sympy.diff(g(x_0, x_1)[l, i], x[j])
+			+ sympy.diff(g(x_0, x_1)[i, j], x[l]) * h(x_0, x_1)[l, k]
 	)
 	return sympy.simplify(gamma)
 
 # Rm_{i, j, k}^l
 def Rm1(x_0, x_1, i, j, k, l):
 	rm1 = (
-		+ sympy.diff(Gamma(x_0, x_1, i, k, l), x_j)
-		- sympy.diff(Gamma(x_0, x_1, j, k, l), x_i)
+		+ sympy.diff(Gamma(x_0, x_1, i, k, l), x[j])
+		- sympy.diff(Gamma(x_0, x_1, j, k, l), x[i])
 	)
 	for m in range(2):
 		rm1 += (
@@ -79,7 +81,7 @@ def K(x_0, x_1, i, j):
 def Rc(x_0, x_1, i, j):
 	rc = 0
 	for k in range(2):
-		rc += Rm(x_0, x_1, i, k, j, k)
+		rc += Rm1(x_0, x_1, i, k, j, k)
 	return sympy.simplify(rc)
 
 # Scalar

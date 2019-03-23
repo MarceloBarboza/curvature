@@ -16,6 +16,14 @@ def print_conformal_metric(dimension):
     print("")
     for i in range(dimension):
         if i == 0:
+            print("x = (x_%d" %i, end='')
+        elif i < dimension - 1:
+            print(", x_%d" %i, end='')
+        else:
+            print(", x_%d)" %i)
+    print("")
+    for i in range(dimension):
+        if i == 0:
             print("def r(x_0", end='')
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
@@ -133,21 +141,21 @@ def print_conformal_metric(dimension):
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d)[j, l], x_i)" %i)
+            print(", x_%d)[j, l], x[i])" %i)
     for i in range(dimension):
         if i == 0:
             print("\t\t\t+ sympy.diff(g(x_0", end='')
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d)[l, i], x_j)" %i)
+            print(", x_%d)[l, i], x[j])" %i)
     for i in range(dimension):
         if i == 0:
             print("\t\t\t+ sympy.diff(g(x_0", end='')
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d)[i, j], x_l) * h(x_0" %i, end='')
+            print(", x_%d)[i, j], x[l]) * h(x_0" %i, end='')
     for i in range(1, dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')
@@ -169,14 +177,14 @@ def print_conformal_metric(dimension):
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d, i, k, l), x_j)" %i)
+            print(", x_%d, i, k, l), x[j])" %i)
     for i in range(dimension):
         if i == 0:
             print("\t\t- sympy.diff(Gamma(x_0", end='')
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d, j, k, l), x_i)\n\t)" %i)
+            print(", x_%d, j, k, l), x[i])\n\t)" %i)
     print("\tfor m in range(%d):" %dimension)
     print("\t\trm1 += (")
     for i in range(dimension):
@@ -273,7 +281,7 @@ def print_conformal_metric(dimension):
     print("\tfor k in range(%d):" %dimension)
     for i in range(dimension):
         if i == 0:
-            print("\t\trc += Rm(x_0", end='')
+            print("\t\trc += Rm1(x_0", end='')
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
