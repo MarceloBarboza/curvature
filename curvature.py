@@ -297,7 +297,7 @@ def print_conformal_metric(dimension):
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d, i, j) * Rc(x_0" %i, end='')
+            print(", x_%d)[i, j] * Rc(x_0" %i, end='')
     for i in range(1, dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')

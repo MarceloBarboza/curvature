@@ -87,6 +87,6 @@ def scal(x_0, x_1):
 	scal = 0
 	for i in range(2):
 		for j in range(2):
-			scal += h(x_0, x_1, i, j) * Rc(x_0, x_1, i, j)
+			scal += h(x_0, x_1)[i, j] * Rc(x_0, x_1, i, j)
 	return sympy.simplify(scal)
 
