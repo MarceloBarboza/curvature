@@ -83,16 +83,16 @@ def print_conformal_metric(dimension):
             print(", x_%d, i, j):" %i)
     for i in range(dimension):
         if i == 0:
-            print("\treturn (1 + r(x_0", end='')
+            print("\treturn ((1 + r(x_0", end='')
         elif i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d) * sigma(x_0" %i, end='')
+            print(", x_%d)) * sigma(x_0" %i, end='')
     for i in range(1, dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d) / 2) ** 2 * delta(i, j)" %i)
+            print(", x_%d) / 2) ** -2 * delta(i, j)" %i)
     print("")
     for i in range(dimension):
         if i == 0:
@@ -261,7 +261,7 @@ def print_conformal_metric(dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')
         else:
-            print(", x_%d)[j, j] - g(x_0" %i, end='')
+            print(", x_%d)[j, j]\n\t\t\t\t- g(x_0" %i, end='')
     for i in range(1, dimension):
         if i < dimension - 1:
             print(", x_%d" %i, end='')
@@ -323,7 +323,7 @@ def main():
         if dimension >= 2:
             print_conformal_metric(dimension)
     else:
-        print("Tente isto: ./curvature.py num_int.")
+        print("Tente isto: ./curvature.py 'número inteiro/dimensão'.")
 
 #
 if __name__ == '__main__':

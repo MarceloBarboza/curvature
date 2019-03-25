@@ -24,7 +24,7 @@ def delta(i, j):
 			return 0
 
 def G(x_0, x_1, i, j):
-	return (1 + r(x_0, x_1) * sigma(x_0, x_1) / 2) ** 2 * delta(i, j)
+	return ((1 + r(x_0, x_1)) * sigma(x_0, x_1) / 2) ** -2 * delta(i, j)
 
 def g(x_0, x_1):
 	return sympy.Matrix(
@@ -73,7 +73,8 @@ def Rm2(x_0, x_1, i, j, k, l):
 def K(x_0, x_1, i, j):
 	if i != j:
 		k = Rm2(x_0, x_1, i, j, i, j) * (
-				g(x_0, x_1)[i, i] * g(x_0, x_1)[j, j] - g(x_0, x_1)[i, j] ** 2
+				g(x_0, x_1)[i, i] * g(x_0, x_1)[j, j]
+				- g(x_0, x_1)[i, j] ** 2
 			) ** -1
 		return sympy.simplify(k)
 
@@ -91,3 +92,4 @@ def scal(x_0, x_1):
 		for j in range(2):
 			scal += h(x_0, x_1)[i, j] * Rc(x_0, x_1, i, j)
 	return sympy.simplify(scal)
+
